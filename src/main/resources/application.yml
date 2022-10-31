@@ -1,0 +1,54 @@
+
+server:
+  port: 8000 # 톰캣 포트 (스프링부트는 톰캣이 내장되어 있다.)
+  servlet:
+    context-path: /blog # 기본 url Path 
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp 
+      # @GetMapping 에서 함수의 return 값이 String인 경우 return 에 대한 내용은 jsp의 파일 이름입니다.
+      # @GetMapping 
+      # public String callJsp(){
+      #   return "home" → /WEB-INF/views/home.jsp 화면을 뿌려라 
+      #   일반적으로 스프링부트는 JSP를 지원하지 않기 때문에 JSP를 사용하기 위해서는 JSP 해석 템플릿 엔진인 jasper을 Gradle에서 다운로드를 해야한다.
+      #}
+  
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: c##root
+    password: 1234
+  jpa:
+    open-in-view: true
+    hibernate:
+      # ddl-auto: create # 최초 전략 Applicaiton 재시작시 테이블 있으면 지우고 다시 만들게 된다.
+      ddl-auto : update # 테이블이 있으면 그대로 사용한다.
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        # field 명 그대로 필드를 만들게 된다.
+        # physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+        # CamelCase 전략을 따라가는데 field 명이 myEmail인 경우 my_email로 변환시켜서 만들어준다. 
+      use-new-id-generator-mappings: false 
+      # true : JPA 기본 전략을 쓴다. 
+      # false : JPA 기본 전략을 쓰지 않는다. → User에 선언한 GenerationType.IDENTITY을 쓰겠다
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      hibernate.query.in_clause_parameter_padding: true
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+
+    
+    
+    
+    
